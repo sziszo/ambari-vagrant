@@ -1,0 +1,189 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = "suse12"
+
+  # Fixes changes from https://github.com/mitchellh/vagrant/pull/4707
+  config.ssh.insert_key = false
+
+  # The url from where the 'config.vm.box' box will be fetched if it
+  # doesn't already exist on the user's system.
+
+  config.vm.box_url = "http://sourceforge.net/projects/opensusevagrant/files/12.3/opensuse-12.3-64.box/download"
+
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--memory", 3072] # RAM allocated to each VM
+  end
+
+  config.vm.provision :shell, :path => "bootstrap.sh"
+
+  config.vm.define :suse1201 do |suse1201|
+    # uncomment the line below to set up the ambari dev environment
+    # suse1201.vm.provision :shell, :path => "dev-bootstrap.sh"
+    suse1201.vm.hostname = "suse1201.ambari.apache.org"
+    suse1201.vm.network :private_network, ip: "192.168.12.111"
+  end
+
+  config.vm.define :suse1202 do |suse1202|
+    suse1202.vm.hostname = "suse1202.ambari.apache.org"
+    suse1202.vm.network :private_network, ip: "192.168.12.112"
+  end
+
+  config.vm.define :suse1203 do |suse1203|
+    suse1203.vm.hostname = "suse1203.ambari.apache.org"
+    suse1203.vm.network :private_network, ip: "192.168.12.113"
+  end
+
+  config.vm.define :suse1204 do |suse1204|
+    suse1204.vm.hostname = "suse1204.ambari.apache.org"
+    suse1204.vm.network :private_network, ip: "192.168.12.114"
+  end
+
+  config.vm.define :suse1205 do |suse1205|
+    suse1205.vm.hostname = "suse1205.ambari.apache.org"
+    suse1205.vm.network :private_network, ip: "192.168.12.115"
+  end
+
+  config.vm.define :suse1206 do |suse1206|
+    suse1206.vm.hostname = "suse1206.ambari.apache.org"
+    suse1206.vm.network :private_network, ip: "192.168.12.116"
+  end
+
+  config.vm.define :suse1207 do |suse1207|
+    suse1207.vm.hostname = "suse1207.ambari.apache.org"
+    suse1207.vm.network :private_network, ip: "192.168.12.117"
+  end
+
+  config.vm.define :suse1208 do |suse1208|
+    suse1208.vm.hostname = "suse1208.ambari.apache.org"
+    suse1208.vm.network :private_network, ip: "192.168.12.118"
+  end
+
+  config.vm.define :suse1209 do |suse1209|
+    suse1209.vm.hostname = "suse1209.ambari.apache.org"
+    suse1209.vm.network :private_network, ip: "192.168.12.119"
+  end
+
+  config.vm.define :suse1210 do |suse1210|
+    suse1210.vm.hostname = "suse1210.ambari.apache.org"
+    suse1210.vm.network :private_network, ip: "192.168.12.120"
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # config.vm.network :forwarded_port, guest: 80, host: 8080
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  # config.vm.network :private_network, ip: "192.168.33.10"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network :public_network
+
+  # If true, then any SSH connections made will enable agent forwarding.
+  # Default value: false
+  # config.ssh.forward_agent = true
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  # config.vm.provider :virtualbox do |vb|
+  #   # Don't boot with headless mode
+  #   vb.gui = true
+  #
+  #   # Use VBoxManage to customize the VM. For example to change memory:
+  #   vb.customize ["modifyvm", :id, "--memory", "1024"]
+  # end
+  #
+  # View the documentation for the provider you're using for more
+  # information on available options.
+
+  # Enable provisioning with Puppet stand alone.  Puppet manifests
+  # are contained in a directory path relative to this Vagrantfile.
+  # You will need to create the manifests directory and a manifest in
+  # the file precise32.pp in the manifests_path directory.
+  #
+  # An example Puppet manifest to provision the message of the day:
+  #
+  # # group { "puppet":
+  # #   ensure => "present",
+  # # }
+  # #
+  # # File { owner => 0, group => 0, mode => 0644 }
+  # #
+  # # file { '/etc/motd':
+  # #   content => "Welcome to your Vagrant-built virtual machine!
+  # #               Managed by Puppet.\n"
+  # # }
+  #
+  # config.vm.provision :puppet do |puppet|
+  #   puppet.manifests_path = "manifests"
+  #   puppet.manifest_file  = "init.pp"
+  # end
+
+  # Enable provisioning with chef solo, specifying a cookbooks path, roles
+  # path, and data_bags path (all relative to this Vagrantfile), and adding
+  # some recipes and/or roles.
+  #
+  # config.vm.provision :chef_solo do |chef|
+  #   chef.cookbooks_path = "../my-recipes/cookbooks"
+  #   chef.roles_path = "../my-recipes/roles"
+  #   chef.data_bags_path = "../my-recipes/data_bags"
+  #   chef.add_recipe "mysql"
+  #   chef.add_role "web"
+  #
+  #   # You may also specify custom JSON attributes:
+  #   chef.json = { :mysql_password => "foo" }
+  # end
+
+  # Enable provisioning with chef server, specifying the chef server URL,
+  # and the path to the validation key (relative to this Vagrantfile).
+  #
+  # The Opscode Platform uses HTTPS. Substitute your organization for
+  # ORGNAME in the URL and validation key.
+  #
+  # If you have your own Chef Server, use the appropriate URL, which may be
+  # HTTP instead of HTTPS depending on your configuration. Also change the
+  # validation key to validation.pem.
+  #
+  # config.vm.provision :chef_client do |chef|
+  #   chef.chef_server_url = "https://api.opscode.com/organizations/ORGNAME"
+  #   chef.validation_key_path = "ORGNAME-validator.pem"
+  # end
+  #
+  # If you're using the Opscode platform, your validator client is
+  # ORGNAME-validator, replacing ORGNAME with your organization name.
+  #
+  # If you have your own Chef Server, the default validation client name is
+  # chef-validator, unless you changed the configuration.
+  #
+  #   chef.validation_client_name = "ORGNAME-validator"
+end
